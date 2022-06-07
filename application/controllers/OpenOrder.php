@@ -18,6 +18,7 @@ class OpenOrder extends MY_Controller
         //$this->load->helper('customstring');
         $this->load->model('OpenOrderModel');
         $this->load->model('SalesOrderModel');
+        $this->load->model('UnplannedOrders');
         $this->load->model('Warning_model');
         $this->load->model('Mapping_model');
 
@@ -40,29 +41,45 @@ class OpenOrder extends MY_Controller
             $part_number = $value['part_number'];
             $due_date = $value['due_date'];
             $total_qty = $value['total_qty'];
+            $org_id = $value['org_id'];
+            $date = $value['date'];
+            $description = $value['description'];
 
             // find account exsist in tolerance setup if exsist get that particular aacount settings otherwise get default settings for all customers
             ## Tolerance setting code ##
 
-            // find part then in sales orders if part number not found in sale order log in Unplanned Orders & continue the line
-            ## Unplanned order code #
+            $toleranceArr = $this->Warning_model->get_tolerance_by_customer($account_id);
+            if(count($toleranceArr)>0){
+                $threshold = $toleranceArr[0]['threshold'];
+            }else{
+                $toleranceArr = $this->Warning_model->get_tolerance_by_customer('All Customers');
+                if(count($toleranceArr)>0){
+                    $threshold = $toleranceArr[0]['threshold'];
+                }else{
+                    $threshold=0;
+                }
+            }
 
             // Customer Item Level Warning
             $saleOrderQty = $this->SalesOrderModel->get_sale_orders($account_id,$part_number,$due_date);
             if($saleOrderQty!='-'){
+                $saleOrderQty = $saleOrderQty*$threshold;
                 if($total_qty>$saleOrderQty){
                     ## Check warning already exist if exist warning status 
-
+                    $warningExist = $this->Warning_model->get_already_exist_warning($account_id,$part_number,$due_date,$total_qty,$saleOrderQty);
+                    if(count($warningExist)>0){
+                        continue;
+                    }
                     ## Log warning on this item customer date code
                     $currentDate = date('Ymd');
                     $warningLogArr = array(
                         'log_date' => $currentDate,
-                        'due_date' => $due_date
+                        'due_date' => $due_date,
                         'customer_name' => $name,
                         'account_number' => $account_id, 
                         'part_num' => $part_number, 
                         'warning' => 'Customer Item Level', 
-                        'tolerance' => 0, 
+                        'tolerance' => $threshold, 
                         'open_order_qty' => $total_qty,
                         'sales_plan_qty' => $saleOrderQty,
                     );
@@ -70,6 +87,20 @@ class OpenOrder extends MY_Controller
 
                     ## email to concern person code 
                 }
+            }else{
+                // find part then in sales orders if part number not found in sale order log in Unplanned Orders & continue the line
+                ## Unplanned order code #
+                $unplannedOrderArr = array(
+                    'date' => $date,
+                    'org_id' => $org_id,
+                    'name' => $name,
+                    'account_id' => $account_id, 
+                    'part_number' => $part_number, 
+                    'description' => $description, 
+                    'due_date' => $due_date, 
+                    'total_qty' => $total_qty,
+                );
+                $this->UnplannedOrders->create_unplanned_orders($unplannedOrderArr);  
             }
         }
 
@@ -77,16 +108,13 @@ class OpenOrder extends MY_Controller
         $dueDates = $this->OpenOrderModel->get_distinct_duedate();
          foreach($dueDates as $key=>$val){
             $totalSaleOrder = $this->SalesOrderModel->get_total_sale_orders($val['due_date']);
-           // echo $val['due_date'].' --- '.$totalSaleOrder." totalSaleOrder --- ";
             $totalOpenOrder = $this->OpenOrderModel->get_total_open_orders($val['due_date']);
-           //echo $totalOpenOrder." totalOpenOrder <br/>";
             if($totalSaleOrder!='-'){
                 if($totalOpenOrder>$totalSaleOrder){
                     echo "Warning $totalOpenOrder is greater then $totalSaleOrder <br/>"; 
                     ## Check warning already exist if exist warning status 
 
                     ## Log warning on this item customer date code
-
                     $currentDate = date('Ymd');
                     $warningLogArr = array(
                         'log_date' => $currentDate,

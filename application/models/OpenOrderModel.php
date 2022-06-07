@@ -47,7 +47,7 @@ class OpenOrderModel extends CI_Model  {
             foreach($transaction_level_file as $key => $row){
                 if($key == 0)
                     continue;
-                if($row[0]=='' || $row[2]=='' || $row[4]=='' || $row[6]=='' || $row[7]=='' )
+                if($row[0]=='' || $row[2]=='' || $row[4]=='' || $row[6]=='' || $row[7]=='')
                     continue;
                 $firstDate =  trim(date('Ymd',strtotime($row[0])));
                 $dueDate =  trim(date('Ym',strtotime($row[6])));
@@ -65,7 +65,7 @@ class OpenOrderModel extends CI_Model  {
                 array_push($bulkinsert_arr,$openOrderArr);
             }
 
-          //  $this->db->insert_batch('open_orders', $bulkinsert_arr);
+          //$this->db->insert_batch('open_orders', $bulkinsert_arr);
             
         }
     }
@@ -81,7 +81,7 @@ class OpenOrderModel extends CI_Model  {
     }
     
     public function get_open_orders(){
-        $this->db->select('name,org_id,date,account_id,part_number,due_date,total_qty');
+        $this->db->select('name,org_id,date,account_id,part_number,due_date,total_qty,description');
         $this->db->where('status',1);
         $this->db->from('open_orders');
         $query = $this->db->get();

@@ -23,6 +23,27 @@ class Warning_model extends CI_Model  {
         }
     }
 
+    public function get_already_exist_warning($account_id,$part_number,$due_date,$total_qty,$saleOrderQty){
+        try{
+        $this->db->select('*');
+        $this->db->from('warning_log');
+        $this->db->where('account_id',$account_id);
+        $this->db->where('part_number',$part_number);
+        $this->db->where('due_date',$due_date);
+        $this->db->where('total_qty',$total_qty);
+        $this->db->where('saleOrderQty',$saleOrderQty);
+        $this->db->order_by('status','Open');
+        $query = $this->db->get();
+        $data = $query->result_array();
+        return $data;
+        }
+        //catch exception
+        catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+            exit;
+        }   
+    } 
+
     public function get_warning_logs(){
         try{
         $this->db->select('*');
@@ -54,6 +75,21 @@ class Warning_model extends CI_Model  {
             exit;
         }  
     }
+
+    public function get_tolerance_by_customer($id){
+        try{
+          $this->db->select('threshold');
+          $this->db->from($this->table);
+          $this->db->where('customer_num',$id);
+          $query = $this->db->get();
+          $data = $query->result_array();
+          return $data[0]['threshold'];
+          }
+          catch(Exception $e) {
+              echo 'Message: ' .$e->getMessage();
+              exit;
+          }  
+      }
 
     public function get_warning_contacts(){
         try{

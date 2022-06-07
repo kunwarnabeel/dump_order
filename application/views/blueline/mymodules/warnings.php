@@ -15,10 +15,11 @@
 
                     <th> No.</th>
                     <th> Global Warning Type</th>
-
+                    <th> Customer</th>
                     <th> Threshold</th>
 
                     <th> <?=$this->lang->line('application_action');?></th>
+                   
                 </thead>
                 <tbody>
                     <?php
@@ -34,8 +35,20 @@
                             ?>
                         <?=$row['type']?></td>
                         <td>
+                        <?php if($row['type']=='Global Default setting for all customers'){
+                            $readonly = "readonly";
+                            $inputValue="All Customers";
+                        }else{
+                            $readonly = "";
+                            $inputValue=$row['customer_num'];
+                        }
+                        ?>
+                        <input <?php echo $readonly?> type="text" class="limit limit_box" name="customer_num"placeholder="Customer Number" value="<?php echo $inputValue ?>">
+                     </td>
+                        <td>
                             <input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-                            <input type="number" class="limit limit_box" name="threshold"placeholder="Threshild" value="<?php echo $row['threshold'] ?>">
+                            <input type="number" class="limit limit_box" name="threshold"placeholder="Threshold" value="<?php echo $row['threshold'] ?>">
+                            
                         </td>
                         <td class="option" width="8%">
                         <input type='submit' name='send' class='btn btn-primary' value='Save'/>

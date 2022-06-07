@@ -33,6 +33,7 @@ class Warnings extends MY_Controller
   $result = false;
   $mapping = array(
     'threshold'=>$_POST['threshold'],
+    'customer_num'=>$_POST['customer_num'],
     'updated_date'=> date('Ymd')
       );
   $result = $this->Warning_model->update_warnings($mapping,$_POST['id']);
