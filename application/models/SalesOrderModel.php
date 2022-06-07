@@ -107,5 +107,17 @@ class SalesOrderModel extends CI_Model  {
             return '-';
     }
 
+    public function get_total_sale_orders($due_date){
+        $this->db->select_sum('value');
+        $this->db->where('period',$due_date);
+        $this->db->from('sales_order');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        if($result)
+            return $result[0]['value'];
+        else
+            return '-';
+    }
+
     
 }

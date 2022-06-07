@@ -70,6 +70,16 @@ class OpenOrderModel extends CI_Model  {
         }
     }
 
+    public function get_distinct_duedate(){
+        $this->db->select('due_date');
+        $this->db->where('status',1);
+        $this->db->distinct();
+        $this->db->from('open_orders');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+    
     public function get_open_orders(){
         $this->db->select('name,org_id,date,account_id,part_number,due_date,total_qty');
         $this->db->where('status',1);
@@ -77,6 +87,18 @@ class OpenOrderModel extends CI_Model  {
         $query = $this->db->get();
         $result = $query->result_array();
         return $result;
+    }
+
+    public function get_total_open_orders($due_date){
+        $this->db->select_sum('total_qty');
+        $this->db->where('due_date',$due_date);
+        $this->db->from('open_orders');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        if($result)
+            return $result[0]['total_qty'];
+        else
+            return '-';
     }
 
    
