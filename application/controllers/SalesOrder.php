@@ -18,8 +18,6 @@ class SalesOrder extends MY_Controller
         //$this->load->helper('customstring');
         $this->load->model('SalesOrderModel');
         $this->load->model('Warning_model');
-        $this->load->model('Mapping_model');
-
     }
 
     public function index(){

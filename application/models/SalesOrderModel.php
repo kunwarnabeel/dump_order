@@ -8,7 +8,6 @@ class SalesOrderModel extends CI_Model  {
         $this->table = 'rlm_data';
         $this->load->library('CSVReader');
         $this->load->library('csvimport');
-        $this->load->model('Mapping_model');
     }
 
     public function import_data(){

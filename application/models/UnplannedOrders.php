@@ -8,7 +8,6 @@ class UnplannedOrders extends CI_Model  {
         $this->table = 'unplanned_orders';
         $this->load->library('CSVReader');
         $this->load->library('csvimport');
-        $this->load->model('Mapping_model');
     }
 
     public function create_unplanned_orders($data){

@@ -8,7 +8,6 @@ class OpenOrderModel extends CI_Model  {
         $this->table = 'rlm_data';
         $this->load->library('CSVReader');
         $this->load->library('csvimport');
-        $this->load->model('Mapping_model');
     }
 
     public function import_data(){
@@ -65,7 +64,7 @@ class OpenOrderModel extends CI_Model  {
                 array_push($bulkinsert_arr,$openOrderArr);
             }
 
-          //$this->db->insert_batch('open_orders', $bulkinsert_arr);
+          $this->db->insert_batch('open_orders', $bulkinsert_arr);
             
         }
     }

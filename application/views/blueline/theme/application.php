@@ -98,7 +98,7 @@ $message_icon = false;
           <li id="item_list" class="<?php if ($act_uri_submenu == '') {
                       echo 'active';
                   } ?>">
-            <a href="<?=site_url(''); ?>">
+           <a href="#">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>
@@ -123,7 +123,7 @@ $message_icon = false;
           <li id="item_list" class="<?php if ($act_uri_submenu == '') {
                       echo 'active';
                   } ?>">
-            <a href="<?=site_url('')?>">
+            <a href="#">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>
@@ -136,7 +136,7 @@ $message_icon = false;
           <li id="item_list" class="<?php if ($act_uri_submenu == '') {
                       echo 'active';
                   } ?>">
-            <a href="<?=site_url('')?>">
+            <a href="#">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>
@@ -149,7 +149,7 @@ $message_icon = false;
           <li id="item_list" class="<?php if ($act_uri_submenu == '') {
                       echo 'active';
                   } ?>">
-            <a href="<?=site_url('')?>">
+            <a href="#">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>
@@ -190,7 +190,7 @@ $message_icon = false;
           <li id="item_list" class="<?php if ($act_uri_submenu == '') {
                       echo 'active';
                   } ?>">
-            <a href="<?=site_url('')?>">
+            <a href="#">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>

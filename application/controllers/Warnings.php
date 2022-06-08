@@ -14,7 +14,6 @@ class Warnings extends MY_Controller
    //   redirect('login');
    // }
    $this->load->model('Warning_model');
-   $this->load->model('Rlm_model');
  }
 
  public function index(){

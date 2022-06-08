@@ -20,7 +20,6 @@ class OpenOrder extends MY_Controller
         $this->load->model('SalesOrderModel');
         $this->load->model('UnplannedOrders');
         $this->load->model('Warning_model');
-        $this->load->model('Mapping_model');
 
     }
 
@@ -53,11 +52,7 @@ class OpenOrder extends MY_Controller
                 $threshold = $toleranceArr[0]['threshold'];
             }else{
                 $toleranceArr = $this->Warning_model->get_tolerance_by_customer('All Customers');
-                if(count($toleranceArr)>0){
-                    $threshold = $toleranceArr[0]['threshold'];
-                }else{
-                    $threshold=0;
-                }
+                $threshold = $toleranceArr[0]['threshold'];
             }
 
             // Customer Item Level Warning
@@ -105,11 +100,14 @@ class OpenOrder extends MY_Controller
         }
 
          // Global Level Warning
-        $dueDates = $this->OpenOrderModel->get_distinct_duedate();
+         $toleranceArr = $this->Warning_model->get_tolerance_by_customer('All Customers');
+         $threshold = $toleranceArr[0]['threshold'];
+         $dueDates = $this->OpenOrderModel->get_distinct_duedate();
          foreach($dueDates as $key=>$val){
             $totalSaleOrder = $this->SalesOrderModel->get_total_sale_orders($val['due_date']);
             $totalOpenOrder = $this->OpenOrderModel->get_total_open_orders($val['due_date']);
             if($totalSaleOrder!='-'){
+               $totalSaleOrder =  $threshold*$totalSaleOrder;
                 if($totalOpenOrder>$totalSaleOrder){
                     echo "Warning $totalOpenOrder is greater then $totalSaleOrder <br/>"; 
                     ## Check warning already exist if exist warning status 
