@@ -133,10 +133,10 @@ $message_icon = false;
             </a> 
           </li>
 
-          <li id="item_list" class="<?php if ($act_uri_submenu == '') {
+          <li id="item_list" class="<?php if ($act_uri_submenu == 'UnplannedOrders') {
                       echo 'active';
                   } ?>">
-            <a href="#">
+           <a href="<?=site_url('UnplannedOrders');?>">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>

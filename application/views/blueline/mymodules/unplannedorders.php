@@ -3,17 +3,12 @@
         <div class="box-shadow">
 
         <div class="table-head" style="height: 70px">
-            <div class="col-md-8">
-            Import Log
+            <div class="col-md-10">
+            Unplanned Orders
             </div>
             <div class="col-md-2">
-                <a style="margin-top:10px" href="<?=site_url()?>activities/export_all" class="btn btn-primary pull-right" >
+                <a style="margin-top:10px" href="<?=site_url()?>warnings/export_all" class="btn btn-primary" >
                             Export All
-                        </a>
-            </div>
-            <div class="col-md-2">
-                <a style="margin-top:10px" href="<?=site_url()?>activities/export_rejected" class="btn btn-primary pull-right" >
-                            Export Rejected
                         </a>
             </div>
         </div>
@@ -22,22 +17,32 @@
 
             <table id="item_tbl" class="item_tbl table" cellspacing="0" cellpadding="0">
                 <thead>
-                    
-                    <th> Import date</th>
-                   <th> File Name </th>
-                   <th> File Type </th>
-                   <th> Import Status</th>
-                    <th> Message</th>
-                    
+                    <th> Date</th>
+                    <th> Org ID</th>
+                    <th> Name</th>
+                    <th> Account No.</th>
+                    <th> Part No.</th>
+                    <th> Description</th>
+                    <th> Due Date</th>
+                    <th> Total Quantity</th>
+                   
                 </thead>
                 <tbody>
-                    <?php foreach($activities as $row){?>
+                    <?php foreach($unplannedorders as $row){?>
                         <tr>
-                        <td><?php echo $row['activity_date']?></td>
-                        <td><?php echo $row['file_name']?></td>
-                        <td><?php echo $row['file_type']?></td>
-                        <td><?php echo $row['activity_status']?></td>
-                        <td><?php echo $row['message']?></td>
+                        <td>
+                            
+                            <?php echo $row['date']?></td>
+                        
+                        <td><?php echo $row['org_id']?></td>
+                        <td><?php echo $row['name']?></td>
+                        <td><?php echo $row['account_id']?></td>
+                        <td><?php echo $row['part_number']?></td>
+                        <td><?php echo $row['description']?></td>
+                        <td><?php echo $row['due_date']?></td>
+                        <td><?php echo $row['total_qty']?></td>
+                        
+                       
                         </tr>
                         <?php }?>                    
                 </tbody>
@@ -51,6 +56,14 @@
         $(".loader").fadeOut("slow");
     });
     $(document).ready(function() {
+        $('.stc_status').on('click',function(e){
+            if ($(this).is(':checked')) {
+                $(this).closest('td').find('.status_val').val('Closed');                
+            }
+            else{
+                    $(this).closest('td').find('.status_val').val('Open');
+            }
+        })
     $('.item_tbl thead tr').clone(true).appendTo( '.item_tbl thead' );
     $('.item_tbl thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
@@ -77,8 +90,8 @@
     var table = $('.item_tbl').DataTable( {
         orderCellsTop: true,
         fixedHeader: true,
-        lengthMenu: [[50, 100, 150, 200,-1], [50, 100, 150,200, "All"]],
-        pageLength: 50,
+        lengthMenu: [[10, 25, 50, 100,-1], [10, 25, 50,100, "All"]],
+        pageLength: defaulnumberofpages,
         fixedHeader: true,
         fixedHeader: {
             header: true,

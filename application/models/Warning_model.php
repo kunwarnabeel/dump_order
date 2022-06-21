@@ -27,15 +27,36 @@ class Warning_model extends CI_Model  {
         try{
         $this->db->select('*');
         $this->db->from('warning_log');
-        $this->db->where('account_id',$account_id);
-        $this->db->where('part_number',$part_number);
+        $this->db->where('account_number',$account_id);
+        $this->db->where('part_num',$part_number);
         $this->db->where('due_date',$due_date);
-        $this->db->where('total_qty',$total_qty);
-        $this->db->where('saleOrderQty',$saleOrderQty);
+        // $this->db->where('open_order_qty',$total_qty);
+        // $this->db->where('sales_plan_qty',$saleOrderQty);
         $this->db->order_by('status','Open');
         $query = $this->db->get();
         $data = $query->result_array();
         return $data;
+        }
+        //catch exception
+        catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+            exit;
+        }   
+    } 
+
+    public function get_global_already_exist_warning($type,$due_date,$total_qty,$saleOrderQty){
+        try{
+            $this->db->select('*');
+            $this->db->from('warning_log');
+            $this->db->where('warning',$type);
+            $this->db->where('due_date',$due_date);
+            // $this->db->where('open_order_qty',$total_qty);
+            // $this->db->where('sales_plan_qty',$saleOrderQty);
+           
+            $this->db->order_by('status','Open');
+            $query = $this->db->get();
+            $data = $query->result_array();
+            return $data;
         }
         //catch exception
         catch(Exception $e) {
@@ -83,7 +104,7 @@ class Warning_model extends CI_Model  {
           $this->db->where('customer_num',$id);
           $query = $this->db->get();
           $data = $query->result_array();
-          return $data[0]['threshold'];
+          return $data;
           }
           catch(Exception $e) {
               echo 'Message: ' .$e->getMessage();

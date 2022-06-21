@@ -24,9 +24,9 @@ class OpenOrderModel extends CI_Model  {
         $import_date = date('Ymd',strtotime('Last Monday'));
         if(date('D') == "Mon") $import_date = date('Ymd');
         $file='dumpopenorders.csv';
-        if (file_exists(FCPATH . '../../../rlm_sheets/'.$file)) {
+        if (file_exists(FCPATH . '../../../dump_order_sheets/'.$file)) {
             
-            $oracle_transaction_file = fopen(FCPATH . '../../../rlm_sheets/'.$file, "r");
+            $oracle_transaction_file = fopen(FCPATH . '../../../dump_order_sheets/'.$file, "r");
             $skip = 0;
             while(! feof($oracle_transaction_file))
             {
@@ -43,13 +43,14 @@ class OpenOrderModel extends CI_Model  {
         {
             $tabledata.="<tr><td><h3>Errors:</h3> <ol><li>File not found</li></ol></td></tr>";
         }else{
+            $totalRowCount=0;
             foreach($transaction_level_file as $key => $row){
                 if($key == 0)
                     continue;
                 if($row[0]=='' || $row[2]=='' || $row[4]=='' || $row[6]=='' || $row[7]=='')
                     continue;
                 $firstDate =  trim(date('Ymd',strtotime($row[0])));
-                $dueDate =  trim(date('Ym',strtotime($row[6])));
+                $dueDate =  trim(date('dmy',strtotime($row[6])));
                 $openOrderArr = array(
                     'date' => $firstDate,
                     'org_id' => trim($row[1]),
@@ -62,9 +63,18 @@ class OpenOrderModel extends CI_Model  {
                 );
                 
                 array_push($bulkinsert_arr,$openOrderArr);
+                $totalRowCount++;
             }
 
           $this->db->insert_batch('open_orders', $bulkinsert_arr);
+          $saleActivityLog = array(
+            'activity_date' =>  date('Y-m-d'),
+            'file_name' =>  $file,
+            'file_type' =>  'Open Order',
+            'activity_status' =>  'Success',
+            'message' => "$totalRowCount rows inserted",
+        );
+       $this->db->insert('activity_log', $saleActivityLog);
             
         }
     }

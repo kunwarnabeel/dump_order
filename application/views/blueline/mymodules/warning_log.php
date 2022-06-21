@@ -18,22 +18,12 @@
             <table id="item_tbl" class="item_tbl table" cellspacing="0" cellpadding="0">
                 <thead>
                     <th> Date</th>
-
-                    <th> Release Date</th>
-
                     <th> Customer</th>
-
-                    <th> Release No.</th>
-                    <th> Customer No.</th>
-
-                    <th> Plant No.</th>
-
-                    <th> Cust Part No.</th>
-
+                    <th> Account No.</th>
                     <th> SWS Part No.</th>
+                    <th> Description</th>
                     <th> Warning</th>
                     <th> Index</th>
-                    <th> Status</th>
                     <th> User Notes</th>
                     <th> <?=$this->lang->line('application_action');?></th>
                 </thead>
@@ -46,16 +36,13 @@
                             echo form_open_multipart($form_action, $attributes); 
                             ?>
                             <?php echo $row['log_date']?></td>
-                        <td><?php echo $row['release_date']?></td>
+                        
                         <td><?php echo $row['customer_name']?></td>
-                        <td><?php echo $row['release_num']?></td>
-                        <td><?php echo $row['customer_num']?></td>
-                        <td><?php echo $row['plant_num']?></td>
+                        <td><?php echo $row['account_number']?></td>
                         <td><?php echo $row['part_num']?></td>
-                        <td><?php echo $row['sws_part_num']?></td>
+                        <td><?php echo $row['description']?></td>
                         <td><?php echo $row['warning']?></td>
-                        <td><?php echo $row['delta']?></td>
-                        <td><?php echo $row['status']?></td>
+                        <td><?php echo $row['tolerance']?></td>
                         <td><input type="hidden" name="id" value="<?php echo $row['id'] ?>">
                             <textarea rows="3" cols="50" class="limit limit_box" name="user_notes" placeholder="User Notes"><?php echo $row['user_note'] ?></textarea></td>
                         <td class="option" width="8%">

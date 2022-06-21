@@ -24,9 +24,9 @@ class SalesOrderModel extends CI_Model  {
         $import_date = date('Ymd',strtotime('Last Monday'));
         if(date('D') == "Mon") $import_date = date('Ymd');
         $file='salesorder.csv';
-        if (file_exists(FCPATH . '../../../rlm_sheets/'.$file)) {
+        if (file_exists(FCPATH . '../../../dump_order_sheets/'.$file)) {
             
-            $oracle_transaction_file = fopen(FCPATH . '../../../rlm_sheets/'.$file, "r");
+            $oracle_transaction_file = fopen(FCPATH . '../../../dump_order_sheets/'.$file, "r");
             $skip = 0;
             while(! feof($oracle_transaction_file))
             {
@@ -54,19 +54,31 @@ class SalesOrderModel extends CI_Model  {
                 }
             }
            
-
+            $totalRowCount = 0;
             foreach($transaction_level_data as $key=>$val){
                 $customerName = $val[0];
                 $account_num = $val[1];
                 $part_num = $val[2];
                 $office = $val[3];
                 $index = 4;
+                $nextYear = date('y');
+                $nextYearCount=0;
                 foreach($transaction_headers as $key1){
                     if($key1=='Customer Name' || $key1=='Account #' || $key1=='Item#'  || $key1=='Office')
                     continue;
-                    $dateFormat = date('Ym',strtotime($key1));
-                    if($dateFormat=='197001')
+                    $format = 'dm'.$nextYear;
+                    $dateFormat = date($format,strtotime($key1));
+                    if($dateFormat=='01011970' || $dateFormat=='19700101')
                     continue;
+                    $getMonth = date('m',strtotime($key1));
+                    if($getMonth == '12'){
+                        if($nextYearCount>0){
+                            $nextYear = date('y', strtotime('+2 year'));
+                        }else{
+                            $nextYear = date('y', strtotime('+1 year'));
+                        }
+                        $nextYearCount++;
+                    }
                     $importDate = date('Ymd');
                     $saleOrderArr = array(
                         'customer_name' =>  $customerName,
@@ -80,13 +92,20 @@ class SalesOrderModel extends CI_Model  {
                     array_push($bulkinsertPeriod_arr,$saleOrderArr);
                     $index++;
                 }
+                $totalRowCount++;
             }
 
             $this->db->insert_batch('sales_order', $bulkinsertPeriod_arr);
-
-            echo "<pre>";
-            print_r($bulkinsertPeriod_arr);
-            exit();
+            $saleActivityLog = array(
+                'activity_date' =>  date('Y-m-d'),
+                'file_name' =>  $file,
+                'file_type' =>  'Sales Plan',
+                'activity_status' =>  'Success',
+                'message' => "$totalRowCount rows inserted",
+            );
+            $this->db->insert('activity_log', $saleActivityLog);
+            $tabledata.="<tr><td><h3>Success:</h3> <p>".$totalRowCount." rows added successfully</p></td></tr>";
+            return $tabledata;
 
             
         }

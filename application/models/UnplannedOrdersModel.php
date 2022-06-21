@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class UnplannedOrders extends CI_Model  {
+class UnplannedOrdersModel extends CI_Model  {
 
     public function __construct()
     {
@@ -16,5 +16,20 @@ class UnplannedOrders extends CI_Model  {
             return true;
         }
         return false;
+    }
+
+    public function get_unplanned_orders(){
+        try{
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $query = $this->db->get();
+        $data = $query->result_array();
+        return $data;
+        }
+        //catch exception
+        catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+            exit;
+        }
     }
 }
