@@ -6,11 +6,11 @@
             <div class="col-md-10">
             Warning Log
             </div>
-            <div class="col-md-2">
+            <!--<div class="col-md-2">
                 <a style="margin-top:10px" href="<?=site_url()?>warnings/export_all" class="btn btn-primary" >
                             Export All
                         </a>
-            </div>
+            </div>-->
         </div>
 
         <div class="table-div responsive padding-top-xs">
@@ -23,7 +23,7 @@
                     <th> SWS Part No.</th>
                     <th> Description</th>
                     <th> Warning</th>
-                    <th> Index</th>
+                    <!--<th> Index</th>-->
                     <th> User Notes</th>
                     <th> <?=$this->lang->line('application_action');?></th>
                 </thead>
@@ -42,9 +42,9 @@
                         <td><?php echo $row['part_num']?></td>
                         <td><?php echo $row['description']?></td>
                         <td><?php echo $row['warning']?></td>
-                        <td><?php echo $row['tolerance']?></td>
+                        <!--<td><?php echo $row['tolerance']?></td>-->
                         <td><input type="hidden" name="id" value="<?php echo $row['id'] ?>">
-                            <textarea rows="3" cols="50" class="limit limit_box" name="user_notes" placeholder="User Notes"><?php echo $row['user_note'] ?></textarea></td>
+                            <textarea rows="3" cols="50" class="limit limit_box" name="user_notes" placeholder="User Notes"><?php echo $row['user_notes'] ?></textarea></td>
                         <td class="option" width="8%">
                                     <input class="status_val" type="hidden" name="status" value="<?=$row['status'];?>"/>
                                 <input class="stc_status" type="checkbox" data-toggle="toggle" 

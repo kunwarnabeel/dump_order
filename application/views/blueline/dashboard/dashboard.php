@@ -43,7 +43,7 @@
                 <div class="tile-base box-shadow">
                     <div class="tile-icon hidden-md hidden-xs"><i class="ion-ios-cloud-upload"></i>
                     </div>
-                    <div class="tile-small-header">Sales Order Import</div>
+                    <div class="tile-small-header">Sales Plan Import</div>
                     <div class="tile-body">
                     <a href = "<?=site_url('SalesOrder/import_data')?>" class="btn btn-primary">Import</a>
                     </div>
@@ -55,24 +55,6 @@
                 </div>
             </div>
             
-            <div class="grid__col-4 grid__col-xs-4 grid__col-sm-4 grid__col-md-4 grid__col-lg-4">
-                <div class="tile-base box-shadow tile-with-icon">
-                    <div class="tile-icon hidden-md hidden-xs"><i class="ion-document"></i></div>
-                    <div class="tile-small-header">
-                        Total Items
-                    </div>
-                    <div class="tile-body">
-                        <div class="number">
-                            <!-- <a href="<?= site_url('item_setup/item_list');?>"><?= $items;?></a> -->
-                            123
-                        </div>
-                    </div>
-                    <div class="tile-bottom">
-                        <div class="progress tile-progress tt">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>

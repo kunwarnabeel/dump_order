@@ -94,7 +94,8 @@ class SalesOrderModel extends CI_Model  {
                 }
                 $totalRowCount++;
             }
-
+			
+			$this->db->query('UPDATE sales_order SET status=0');
             $this->db->insert_batch('sales_order', $bulkinsertPeriod_arr);
             $saleActivityLog = array(
                 'activity_date' =>  date('Y-m-d'),
@@ -113,6 +114,7 @@ class SalesOrderModel extends CI_Model  {
 
     public function get_sale_orders($account_id,$part_number,$due_date){
         $this->db->select('value');
+		$this->db->where('status',1);
         $this->db->where('account_num',$account_id);
         $this->db->where('part_num',$part_number);
         $this->db->where('period',$due_date);
@@ -127,6 +129,7 @@ class SalesOrderModel extends CI_Model  {
 
     public function get_total_sale_orders($due_date){
         $this->db->select_sum('value');
+		$this->db->where('status',1);
         $this->db->where('period',$due_date);
         $this->db->from('sales_order');
         $query = $this->db->get();

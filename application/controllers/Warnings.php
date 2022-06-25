@@ -50,7 +50,7 @@ class Warnings extends MY_Controller
   // print_r($_POST);exit;
   $result = false;
   $mapping = array(
-    'user_note'=>$_POST['user_notes'],
+    'user_notes'=>$_POST['user_notes'],
     'status'=> $_POST['status']
       );
   $result = $this->Warning_model->update_warninglog($mapping,$_POST['id']);

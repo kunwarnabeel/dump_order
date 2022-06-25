@@ -6,7 +6,7 @@
             <div class="col-md-8">
             Import Log
             </div>
-            <div class="col-md-2">
+            <!--<div class="col-md-2">
                 <a style="margin-top:10px" href="<?=site_url()?>activities/export_all" class="btn btn-primary pull-right" >
                             Export All
                         </a>
@@ -15,7 +15,7 @@
                 <a style="margin-top:10px" href="<?=site_url()?>activities/export_rejected" class="btn btn-primary pull-right" >
                             Export Rejected
                         </a>
-            </div>
+            </div>-->
         </div>
 
         <div class="table-div responsive padding-top-xs">

@@ -65,7 +65,8 @@ class OpenOrderModel extends CI_Model  {
                 array_push($bulkinsert_arr,$openOrderArr);
                 $totalRowCount++;
             }
-
+		
+		  $this->db->query('UPDATE open_orders SET status=0');
           $this->db->insert_batch('open_orders', $bulkinsert_arr);
           $saleActivityLog = array(
             'activity_date' =>  date('Y-m-d'),
@@ -101,6 +102,7 @@ class OpenOrderModel extends CI_Model  {
     public function get_total_open_orders($due_date){
         $this->db->select_sum('total_qty');
         $this->db->where('due_date',$due_date);
+		$this->db->where('status',1);
         $this->db->from('open_orders');
         $query = $this->db->get();
         $result = $query->result_array();

@@ -104,7 +104,7 @@ class OpenOrder extends MY_Controller
         }
 
          // Global Level Warning
-         $toleranceArr = $this->Warning_model->get_tolerance_by_customer('All Customers');
+         $toleranceArr = $this->Warning_model->get_tolerance_by_customer('Global Warning');
          $threshold = $toleranceArr[0]['threshold'];
          $dueDates = $this->OpenOrderModel->get_distinct_duedate();
          foreach($dueDates as $key=>$val){

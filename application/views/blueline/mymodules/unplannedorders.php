@@ -6,16 +6,16 @@
             <div class="col-md-10">
             Unplanned Orders
             </div>
-            <div class="col-md-2">
+           <!-- <div class="col-md-2">
                 <a style="margin-top:10px" href="<?=site_url()?>warnings/export_all" class="btn btn-primary" >
                             Export All
                         </a>
-            </div>
+            </div>-->
         </div>
 
         <div class="table-div responsive padding-top-xs">
 
-            <table id="item_tbl" class="item_tbl table" cellspacing="0" cellpadding="0">
+            <table id="item_tbl" class="item_tbl table table-bordered table-striped table-hover" cellspacing="0" cellpadding="0">
                 <thead>
                     <th> Date</th>
                     <th> Org ID</th>
