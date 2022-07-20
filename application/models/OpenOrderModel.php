@@ -68,12 +68,20 @@ class OpenOrderModel extends CI_Model  {
 		
 		  $this->db->query('UPDATE open_orders SET status=0');
           $this->db->insert_batch('open_orders', $bulkinsert_arr);
+          $mnth_end_order=0;
+          $file_path=null;
+          if(date('Y-m-d') == date("Y-m-t", strtotime(date('Y-m-d')))){
+            $mnth_end_order = 1;
+            $file_path = FCPATH . '../../../dump_order_sheets/'.$file;
+          }
           $saleActivityLog = array(
             'activity_date' =>  date('Y-m-d'),
             'file_name' =>  $file,
             'file_type' =>  'Open Order',
             'activity_status' =>  'Success',
             'message' => "$totalRowCount rows inserted",
+            'mnth_end_order' => $mnth_end_order,
+            'file_path' => $file_path,
         );
        $this->db->insert('activity_log', $saleActivityLog);
             
@@ -81,9 +89,9 @@ class OpenOrderModel extends CI_Model  {
     }
 
     public function get_distinct_duedate(){
-        $this->db->select('due_date');
+        $this->db->select('due_date,part_number,description,account_id,name');
         $this->db->where('status',1);
-        $this->db->distinct();
+        $this->db->group_by(array('due_date','part_number'));
         $this->db->from('open_orders');
         $query = $this->db->get();
         $result = $query->result_array();
@@ -99,9 +107,10 @@ class OpenOrderModel extends CI_Model  {
         return $result;
     }
 
-    public function get_total_open_orders($due_date){
+    public function get_total_open_orders($due_date,$part_num){
         $this->db->select_sum('total_qty');
         $this->db->where('due_date',$due_date);
+        $this->db->where('part_number',$part_num);
 		$this->db->where('status',1);
         $this->db->from('open_orders');
         $query = $this->db->get();

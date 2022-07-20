@@ -174,7 +174,7 @@ $message_icon = false;
             </a> 
           </li>
           
-         <!-- <li id="item_list" class="<?php if ($act_uri_submenu == 'activities') {
+         <li id="item_list" class="<?php if ($act_uri_submenu == 'activities') {
                       echo 'active';
                   } ?>">
             <a href="<?=site_url('activities')?>">
@@ -190,7 +190,7 @@ $message_icon = false;
          <li id="item_list" class="<?php if ($act_uri_submenu == '') {
                       echo 'active';
                   } ?>">
-            <a href="#" style="background:red;">
+            <a href="<?=site_url('activities/month_end_orders')?>">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>
@@ -212,10 +212,10 @@ $message_icon = false;
               </span>
             </a> 
           </li>
-          <li class="<?php if ($act_uri_submenu == 'item_list') {
+          <li class="<?php if ($act_uri_submenu == 'condition_list') {
                       echo 'active';
                   } ?>">
-            <a href="#" style="background:red;">
+            <a href="<?=site_url('condition_list'); ?>">
               <span class="menu-icon">
                 <i class="fa icon dripicons-blog"></i>
               </span>
@@ -223,7 +223,7 @@ $message_icon = false;
                 Conditions List
               </span>
             </a> 
-          </li>-->
+          </li>
 
 
         </ul>

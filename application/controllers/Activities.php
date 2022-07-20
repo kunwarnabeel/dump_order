@@ -21,6 +21,11 @@ class Activities extends MY_Controller
   $this->view_data['activities'] = $activity_list;     
     $this->content_view = 'mymodules/activity_log';
  }
+ public function month_end_orders(){
+  $month_end_orders = $this->Activity_model->get_month_end_orders();
+  $this->view_data['month_end_orders'] = $month_end_orders; 
+  $this->content_view = 'mymodules/month_end_orders';
+ }
  public function export_all(){
   $result = $this->Activity_model->get_activities();
   $filename = "All_releases_".date('m-d-Y').".csv";

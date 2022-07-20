@@ -127,10 +127,11 @@ class SalesOrderModel extends CI_Model  {
             return '-';
     }
 
-    public function get_total_sale_orders($due_date){
+    public function get_total_sale_orders($due_date,$part_num){
         $this->db->select_sum('value');
 		$this->db->where('status',1);
         $this->db->where('period',$due_date);
+        $this->db->where('part_num',$part_num);
         $this->db->from('sales_order');
         $query = $this->db->get();
         $result = $query->result_array();

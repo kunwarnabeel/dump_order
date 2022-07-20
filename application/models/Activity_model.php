@@ -27,6 +27,24 @@ class Activity_model extends CI_Model  {
         }
     }
 
+    public function get_month_end_orders(){
+        // echo $customer_number;exit;
+        try{
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->where('mnth_end_order','1');
+        $this->db->order_by('id','DESC');
+        $query = $this->db->get();
+        $data = $query->result_array();
+        return $data;
+        }
+        //catch exception
+        catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+            exit;
+        }
+    }
+
     public function get_date_format($customer_num){
         try{
         $this->db->select('date_format');

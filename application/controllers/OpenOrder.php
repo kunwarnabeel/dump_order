@@ -107,16 +107,24 @@ class OpenOrder extends MY_Controller
          $toleranceArr = $this->Warning_model->get_tolerance_by_customer('Global Warning');
          $threshold = $toleranceArr[0]['threshold'];
          $dueDates = $this->OpenOrderModel->get_distinct_duedate();
+        //  echo $threshold;
+        //  echo "<pre>";
+        //  print_r($dueDates);
+        //  exit();
          foreach($dueDates as $key=>$val){
             $valDueDate = $val['due_date'];
-            $totalSaleOrder = $this->SalesOrderModel->get_total_sale_orders($val['due_date']);
-            $totalOpenOrder = $this->OpenOrderModel->get_total_open_orders($val['due_date']);
+            $valPartNum = $val['part_number'];
+            $valDescription = $val['description'];
+            $valCustomer = $val['name'];
+            $valAccountId = $val['account_id'];
+            $totalSaleOrder = $this->SalesOrderModel->get_total_sale_orders($valDueDate,$valPartNum);
+            $totalOpenOrder = $this->OpenOrderModel->get_total_open_orders($valDueDate,$valPartNum);
             if($totalSaleOrder!='-' && $totalSaleOrder!='' && $totalSaleOrder!=NULL){
                $totalSaleOrderThreshold =  $threshold*$totalSaleOrder;
                 if($totalOpenOrder>$totalSaleOrderThreshold){
                     ## Check warning already exist if exist warning status
                     // exit();
-                    $warningExist = $this->Warning_model->get_global_already_exist_warning('Global Level',$valDueDate,$totalOpenOrder,$totalSaleOrder);
+                    $warningExist = $this->Warning_model->get_global_already_exist_warning('Global Level',$valDueDate,$valPartNum,$totalOpenOrder,$totalSaleOrder);
                     if(count($warningExist)>0){
                         continue;
                     } 
@@ -130,6 +138,10 @@ class OpenOrder extends MY_Controller
                         'tolerance' => $threshold, 
                         'open_order_qty' => $totalOpenOrder,
                         'sales_plan_qty' => $totalSaleOrder,
+                        'part_num' => $valPartNum,
+                        'description' => $valDescription,
+                        'customer_name' => $valCustomer,
+                        'account_number' => $valAccountId,  
                     );
                     $this->Warning_model->create_warning($warningLogArr);
                     $GlobalLevelWarningCount++;
