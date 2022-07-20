@@ -23,13 +23,29 @@ class Condition_list extends MY_Controller
     $this->content_view = 'mymodules/condition_list';
  }
  public function update(){
+  //print_r($_POST); exit();
+  if($_POST['send']=='Delete'){
+    $deleteId = $_POST['id'];
+    $this->db->query("delete from condition_list where id=$deleteId");
+    redirect('condition_list');
+  }
+  if($_POST['send']=='Add Row'){
+    $this->db->query("INSERT INTO condition_list (formula_name,formula_value) VALUES('','')");
+    redirect('condition_list');
+  }
   $result = false;
   if(empty($_POST['formula_value'])){
     $this->session->set_flashdata('message', 'error: formula field can not be empty');
     redirect('condition_list');
   }
-  $formula_value = $_POST['formula_value'].','.$_POST['formula_value'];
+  if(empty($_POST['formula_name'])){
+    $this->session->set_flashdata('message', 'error: warning field can not be empty');
+    redirect('condition_list');
+  }
+  $formula_value = $_POST['formula_value'];
+  $formula_name = $_POST['formula_name'];
   $mapping = array(
+    'formula_name'=> $formula_name,
     'formula_value'=> $formula_value,
     'updated_date'=> date('Ymd')
       );

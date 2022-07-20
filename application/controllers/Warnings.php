@@ -29,6 +29,15 @@ class Warnings extends MY_Controller
     $this->content_view = 'mymodules/warning_log';
  }
  public function update(){
+  if($_POST['send']=='Delete'){
+    $deleteId = $_POST['id'];
+    $this->db->query("delete from warning where id=$deleteId");
+    redirect('warnings');
+  }
+  if($_POST['send']=='Add Row'){
+    $this->db->query("INSERT INTO warning (type,customer_num,threshold) VALUES('Customer specific setting','','')");
+    redirect('warnings');
+  }
   $result = false;
   $mapping = array(
     'threshold'=>$_POST['threshold'],

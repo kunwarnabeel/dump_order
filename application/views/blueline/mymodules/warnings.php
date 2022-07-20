@@ -3,10 +3,17 @@
         <div class="box-shadow">
 
         <div class="table-head" style="height: 70px">
-            <div class="col-md-12">
+            <div class="col-md-6">
             Warning Setup
             </div>
+            <div class="col-md-6">
+                <?php echo form_open_multipart($form_action, $attributes); ?>
+                <input type='submit' name='send' class='btn btn-primary' value='Add Row'/>
+                <?php echo form_close(); ?>
+            </div>
         </div>
+
+        
 
         <div class="table-div responsive padding-top-xs">
 
@@ -50,8 +57,11 @@
                             <input type="number" class="limit limit_box" name="threshold"placeholder="Threshold" value="<?php echo $row['threshold'] ?>">
                             
                         </td>
-                        <td class="option" width="8%">
+                        <td class="option" width="16%">
                         <input type='submit' name='send' class='btn btn-primary' value='Save'/>
+                        <?php if($row['type']=='Customer specific setting'){?>
+                        <input type='submit' name='send' class='btn btn-danger' value='Delete'/>
+                        <?php } ?>
                         <?php echo form_close(); ?>
                     </td>
                         </tr>

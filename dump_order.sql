@@ -27,37 +27,43 @@ CREATE TABLE `activity_log` (
   `file_type` varchar(20) NOT NULL,
   `activity_status` varchar(20) NOT NULL,
   `message` text NOT NULL,
+  `mnth_end_order` tinyint(4) NOT NULL DEFAULT 0,
+  `file_path` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 /*Data for the table `activity_log` */
 
-insert  into `activity_log`(`id`,`activity_date`,`file_name`,`file_type`,`activity_status`,`message`) values 
-(1,'2022-06-23','salesorder.csv','Sales Plan','Success','4 rows inserted'),
-(2,'2022-06-23','dumpopenorders.csv','Open Order','Success','18 rows inserted'),
-(3,'2022-06-23','dumpopenorders.csv','Open Order','Success','18 rows inserted'),
-(4,'2022-06-23','salesorder.csv','Sales Plan','Success','4 rows inserted'),
-(5,'2022-06-23','dumpopenorders.csv','Open Order','Success','18 rows inserted'),
-(6,'2022-06-23','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(7,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(8,'2022-06-23','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(9,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(10,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(11,'2022-06-23','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(12,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(13,'2022-06-23','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(14,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(15,'2022-06-23','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(16,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(17,'2022-06-23','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(18,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(19,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(20,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(21,'2022-06-23','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(22,'2022-06-24','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(23,'2022-06-24','dumpopenorders.csv','Open Order','Success','3 rows inserted'),
-(24,'2022-06-24','salesorder.csv','Sales Plan','Success','2 rows inserted'),
-(25,'2022-06-24','dumpopenorders.csv','Open Order','Success','3 rows inserted');
+insert  into `activity_log`(`id`,`activity_date`,`file_name`,`file_type`,`activity_status`,`message`,`mnth_end_order`,`file_path`) values 
+(1,'2022-07-18','salesorder.csv','Sales Plan','Success','2 rows inserted',0,NULL),
+(2,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(3,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(4,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(5,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(6,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(7,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(8,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(9,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(10,'2022-07-18','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL),
+(11,'2022-07-20','salesorder.csv','Sales Plan','Success','2 rows inserted',0,NULL),
+(12,'2022-07-20','dumpopenorders.csv','Open Order','Success','3 rows inserted',0,NULL);
+
+/*Table structure for table `condition_list` */
+
+DROP TABLE IF EXISTS `condition_list`;
+
+CREATE TABLE `condition_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `formula_name` varchar(200) NOT NULL,
+  `formula_value` text NOT NULL,
+  `updated_date` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+/*Data for the table `condition_list` */
+
+insert  into `condition_list`(`id`,`formula_name`,`formula_value`,`updated_date`) values 
+(8,'','',NULL);
 
 /*Table structure for table `contact_book` */
 
@@ -234,14 +240,17 @@ CREATE TABLE `open_orders` (
   `total_qty` int(20) NOT NULL,
   `status` tinyint(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `open_orders` */
 
 insert  into `open_orders`(`id`,`date`,`org_id`,`name`,`account_id`,`part_number`,`description`,`due_date`,`total_qty`,`status`) values 
-(1,'20220215','TBD','Aptiv Services US, LLC','D05916','60982828','Connector A','220422',190000,1),
-(2,'20220215','TBD','Aptiv Services US, LLC','D05916','60989615','Connector A','220422',250000,1),
-(3,'20220215','TBD','Aptiv Services US, LLC','D05916','60990005','Connector A','220422',150000,1);
+(1,'20220705','TBD','Aptiv Services US, LLC','D05916','60982828','Connector A','220922',2000,0),
+(2,'20220705','TBD','Aptiv Services US, LLC','D05916','60989615','Connector A','220922',1500,0),
+(3,'20220705','TBD','Aptiv Services US, LLC','D05916','60990005','Connector A','220922',3000,0),
+(4,'20220705','TBD','Aptiv Services US, LLC','D05916','60982828','Connector A','220922',2000,1),
+(5,'20220705','TBD','Aptiv Services US, LLC','D05916','60989615','Connector A','220922',1500,1),
+(6,'20220705','TBD','Aptiv Services US, LLC','D05916','60990005','Connector A','220922',3000,1);
 
 /*Table structure for table `pw_reset` */
 
@@ -292,13 +301,15 @@ CREATE TABLE `sales_order` (
   `status` tinyint(4) DEFAULT 1,
   `import_date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `sales_order` */
 
 insert  into `sales_order`(`id`,`customer_name`,`account_num`,`part_num`,`office`,`period`,`value`,`status`,`import_date`) values 
-(1,'Aptiv Services US, LLC','D05916','60982828','NOVI','220422','125000',1,'20220624'),
-(2,'Aptiv Services US, LLC','D05916','60989615','NOVI','220422','150000',1,'20220624');
+(1,'Aptiv Services US, LLC','D05916','60982828','NOVI','220922','500',0,'20220718'),
+(2,'Aptiv Services US, LLC','D05916','60989615','NOVI','220922','500',0,'20220718'),
+(3,'Aptiv Services US, LLC','D05916','60982828','NOVI','220922','500',1,'20220720'),
+(4,'Aptiv Services US, LLC','D05916','60989615','NOVI','220922','500',1,'20220720');
 
 /*Table structure for table `unplanned_orders` */
 
@@ -322,7 +333,7 @@ CREATE TABLE `unplanned_orders` (
 /*Data for the table `unplanned_orders` */
 
 insert  into `unplanned_orders`(`id`,`date`,`org_id`,`name`,`account_id`,`part_number`,`description`,`due_date`,`total_qty`,`status`) values 
-(1,'20220215','TBD','Aptiv Services US, LLC','D05916','60990005','Connector A','220422',150000,1);
+(1,'20220705','TBD','Aptiv Services US, LLC','D05916','60990005','Connector A','220922',3000,1);
 
 /*Table structure for table `users` */
 
@@ -366,17 +377,14 @@ CREATE TABLE `warning` (
   `threshold` varchar(5) DEFAULT NULL,
   `updated_date` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 /*Data for the table `warning` */
 
 insert  into `warning`(`id`,`type`,`customer_num`,`threshold`,`updated_date`) values 
 (1,'Default setting for all customers','All Customers','1.5','20220608'),
 (2,'Global warning setting','Global Warning','2','20220623'),
-(3,'Customer specific setting','123456','',''),
-(4,'Customer specific setting',NULL,'',''),
-(5,'Customer specific setting',NULL,'',''),
-(7,'Customer specific setting',NULL,'','20220607');
+(13,'Customer specific setting','','',NULL);
 
 /*Table structure for table `warning_log` */
 
@@ -398,14 +406,15 @@ CREATE TABLE `warning_log` (
   `user_notes` text DEFAULT NULL,
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `warning_log` */
 
 insert  into `warning_log`(`id`,`log_date`,`customer_name`,`account_number`,`part_num`,`warning`,`status`,`tolerance`,`comments`,`due_date`,`open_order_qty`,`sales_plan_qty`,`user_notes`,`description`) values 
-(1,'20220624','Aptiv Services US, L','D05916','60982828','Customer Item Level','Open',1.5,NULL,'220422',190000,125000,NULL,'Connector A'),
-(2,'20220624','Aptiv Services US, L','D05916','60989615','Customer Item Level','Open',1.5,NULL,'220422',250000,150000,NULL,'Connector A'),
-(3,'20220624','','','','Global Level','Closed',2,NULL,'220422',590000,275000,'dsasd',NULL);
+(1,'20220720','Aptiv Services US, L','D05916','60982828','Customer Item Level','Open',1.5,NULL,'220922',2000,500,NULL,'Connector A'),
+(2,'20220720','Aptiv Services US, L','D05916','60989615','Customer Item Level','Open',1.5,NULL,'220922',1500,500,NULL,'Connector A'),
+(3,'20220720','Aptiv Services US, L','D05916','60982828','Global Level','Open',2,NULL,'220922',2000,500,NULL,'Connector A'),
+(4,'20220720','Aptiv Services US, L','D05916','60989615','Global Level','Open',2,NULL,'220922',1500,500,NULL,'Connector A');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
